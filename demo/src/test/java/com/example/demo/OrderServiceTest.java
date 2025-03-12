@@ -49,6 +49,38 @@ public class OrderServiceTest {
         assertThat(book.getStockQuantity()).isEqualTo(8);
     }
 
+    @Test
+    public void 상품주문_재고수량초과() {
+        //given
+        Member member = createMember("회원1", "서울", "테헤란로", "12345");
+        Item item = createBook("시골 JPA", 10000, 10);
+
+        int orderCount = 11;
+        //when
+        NotEnoughStockException e = assertThrows(NotEnoughStockException.class, () -> orderService.order(member.getId(), item.getId(), orderCount));
+
+        //then
+        assertThat(e.getMessage()).isEqualTo("need more stock");
+    }
+
+    @Test
+    public void 주문취소() {
+        //given
+        Member member = createMember("회원1", "서울", "테헤란로", "12345");
+        Item item = createBook("시골 JPA", 10000, 10);
+        int orderCount = 2;
+        Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
+
+        //when
+        orderService.cancelOrder(orderId);
+
+        //then
+        Order getOrder = orderRepository.findOne(orderId);
+        assertThat(getOrder.getStatus()).isEqualTo(OrderStatus.CANCEL);
+        assertThat(item.getStockQuantity()).isEqualTo(10);
+    }
+
+
     private Item createBook(String name, int price, int stockQuantity) {
         Item book = new Book();
         book.setName(name);
