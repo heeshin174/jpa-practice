@@ -30,6 +30,12 @@ public class ItemController {
         book.setIsbn(form.getIsbn());
 
         itemService.saveItem(book);
-        return "redirect:/";
+        return "redirect:/items";
+    }
+
+    @GetMapping("/items")
+    public String list(Model model) {
+        model.addAttribute("items", itemService.findItems());
+        return "items/itemList"; // item list로 페이지 변환
     }
 }
