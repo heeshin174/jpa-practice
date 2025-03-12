@@ -27,6 +27,8 @@ public class OrderRepository {
         return em.find(Order.class, orderId);
     }
 
+    // Order 검색 기능
+    // 방법1: JPQL로 Order를 검색 (legacy)
     public List<Order> findAllByString(OrderSearch orderSearch) {
         String jpql = "select o From Order o join o.member m";
         boolean isFirstCondition = true;
@@ -57,6 +59,7 @@ public class OrderRepository {
         return query.getResultList();
     }
 
+    // 방법2: JPA Criteria로 Order를 검색 (legacy)
     public List<Order> findAllByCriteria(OrderSearch orderSearch) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Order> cq = cb.createQuery(Order.class);
