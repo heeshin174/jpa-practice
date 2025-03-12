@@ -24,7 +24,7 @@ public class MemberServiceTest {
     EntityManager em;
 
     @Test
-    public void testMember() throws Exception {
+    public void testMember() {
         // given
         Member member = new Member();
         member.setName("Kim");
@@ -38,7 +38,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    public void 중복_회원_예외() throws Exception {
+    public void 중복_회원_예외() {
         //given
         Member member1 = new Member();
         member1.setName("kim");
