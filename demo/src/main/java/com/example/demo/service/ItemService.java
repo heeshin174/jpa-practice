@@ -14,6 +14,7 @@ import java.util.List;
 public class ItemService {
     private final ItemRepository itemRepository;
 
+    // 상품 등록
     @Transactional
     public Long saveItem(Item item) {
         itemRepository.save(item);
